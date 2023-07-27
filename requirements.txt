@@ -1,0 +1,8 @@
+cv2
+matplotlib
+mediapipe
+numpy
+pandas
+scipy
+streamlit
+tempfile
