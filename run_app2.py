@@ -10,7 +10,7 @@ from scipy.fftpack import fft, ifft
 
 mp_drawing = mp.solutions.drawing_utils  # 検出した特徴点を描画
 mp_drawing_styles = mp.solutions.drawing_styles  # 点や線の色、太さなどのスタイル
-mp_pose = mp.solutions.pose  # 人間の身体の姿勢を推定
+mp_pose = mp.solutions.pose  # 人間の身体の姿勢を推定g
 st.title('ランニングフォーム診断AI')
 st.write('あなたのフォームを診断します')
 st.write('あなた1人を撮影したランニング動画をアップロードしてください')
