@@ -100,7 +100,7 @@ if video_file is not None:
     with mp_pose.Pose(
         static_image_mode=False,  # 連続したFrame間で姿勢推定を行う場合に、各Frameを独立した画像として扱うかどうか。
                                   # Falseとすれば、前のFrameの情報を利用してより正確な推定を行う。
-        model_complexity=0, # 0,1,2のどれかを選択。2が最も精度が高いが計算コストも増える
+        model_complexity=1, # 0,1,2のどれかを選択。2が最も精度が高いが計算コストも増える
         enable_segmentation=True,  # Trueとすることで、人間の部分と非人間の部分に分けて処理を行う
         min_detection_confidence=0.5) as pose:  # ランドマークの検出信頼度の最小値を設定。ここでは0.5未満のランドマークは無視される。
 
