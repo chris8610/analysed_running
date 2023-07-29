@@ -138,7 +138,7 @@ if video_file is not None:
     landmarks_df.to_csv('landmarks.csv', index=False)
 
     # 最初のフレームを表示
-    st.image(cv2.cvtColor(video_data_array[0], cv2.COLOR_BGR2RGB), caption="最初のフレーム", use_column_width=True)  # RGB形式の画像として表示
+    # st.image(cv2.cvtColor(video_data_array[0], cv2.COLOR_BGR2RGB), caption="最初のフレーム", use_column_width=True)  # RGB形式の画像として表示
 
     # out.release()  # Be sure to release the video writer 
 
@@ -152,9 +152,12 @@ if video_file is not None:
     # play_output_video(video_data_array, video_fps)
 
     import tempfile
+    from moviepy.editor import *
     # 一時ファイルを作成
     tfile = tempfile.NamedTemporaryFile(delete=False, suffix='.mp4') 
     output_filename = tfile.name
+    tfile2 = tempfile.NamedTemporaryFile(delete=False, suffix='.mp4') 
+    output_filename2 = tfile2.name
 
     # 出力形式を指定する
     output_file = cv2.VideoWriter(output_filename,cv2.VideoWriter_fourcc(*'MP4V'),video_fps,(video_width,video_hight))
@@ -166,8 +169,14 @@ if video_file is not None:
         output_file.write(video_data_bgr)
     output_file.release()
 
+    from moviepy.editor import VideoFileClip
+    clip = VideoFileClip(output_filename)
+    # RGBへの変換
+    clip = clip.fl_image(lambda image: cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
+    clip.write_videofile(output_filename2, codec='libx264')
+
     # Streamlitのvideoウィジェットで動画を再生する
-    st.video(output_filename)
+    st.video(output_filename2)
 
 
 
@@ -247,12 +256,12 @@ if video_file is not None:
     separated_df.to_csv('separated_landmarks.csv', index=False)
 
     # 重心の上下動可視化
-    fig, ax = plt.subplots()
-    ax.plot(separated_df['centroid_y'])
-    ax.set_title('Vertical Movement of Centroid')
-    ax.set_xlabel('Frame')
-    ax.set_ylabel('Position')
-    st.pyplot(fig)
+    # fig, ax = plt.subplots()
+    # ax.plot(separated_df['centroid_y'])
+    # ax.set_title('Vertical Movement of Centroid')
+    # ax.set_xlabel('Frame')
+    # ax.set_ylabel('Position')
+    # st.pyplot(fig)
 
     # 両足の上下動可視化
     fig, ax = plt.subplots()
