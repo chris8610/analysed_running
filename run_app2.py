@@ -351,8 +351,6 @@ if video_file is not None:
 
     heel_max_indices = np.sort(np.concatenate((left_heel_max_indices, right_heel_max_indices)))
 
-    st.write(f'あなたの歩数は {len(valid_max_indices_centroid)}歩です')
-
     # 簡単な比較のためにnumpy配列に変換
     valid_max_indices_centroid_array = np.array(valid_max_indices_centroid)
 
@@ -397,7 +395,8 @@ if video_file is not None:
     # 全体のフレーム数に対するGOODのフレームの割合を計算します
     good_ratio = round(good_count / len(heel_max_indices) * 100, 2)
 
-    st.write(f'あなたの着地位置は、{good_ratio}点です！')
+    st.write(f'あなたの歩数は {len(valid_max_indices_centroid)}歩です。')
+    st.write(f'{len(valid_max_indices_centroid)}歩のうち、{good_ratio}％で真下着地ができています！')
 
 
     # 初期化
@@ -442,4 +441,14 @@ if video_file is not None:
     # 右かかとのGOODのフレームの割合を計算します
     right_good_ratio = round(right_good_count / len(right_heel_max_indices) * 100, 2)
 
-    st.write(f'左足は {left_good_ratio}点、右足は {right_good_ratio}点です！')
+    st.write(f'左足は {left_good_ratio}％、右足は {right_good_ratio}％です！')
+
+    # 左足と右足の比率を比較
+    if left_good_ratio < right_good_ratio:
+        difference = round(right_good_ratio - left_good_ratio, 2)  # 差を計算
+        st.write(f'左足の方が右足より {difference}％ 多く重心より前に着地してしまっているようです。')
+    elif right_good_ratio < left_good_ratio:
+        difference = round(left_good_ratio - right_good_ratio, 2)  # 差を計算
+        st.write(f'右足の方が左足より {difference}％ 多く重心より前に着地してしまっているようです。')
+    else:
+        st.write('左足と右足の比率は同じです。')
